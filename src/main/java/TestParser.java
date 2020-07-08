@@ -9,23 +9,23 @@ import java.util.List;
 public class TestParser {
     public static void main(String[] args) {
         List<Article> articleList = new ArrayList<Article>();
-        Document document = null;
+        Document document;
         try {
             document = Jsoup.connect("https://hi-news.ru/").get();
+            Elements tagA = document.getElementsByTag("h2");
+
+            for (Element el: tagA) {
+                Element aElement = el.child(0);
+                String url = aElement.attr("href");
+                String title = aElement.text();
+
+                articleList.add(new Article(url,title));
+            }
+            for (Article list : articleList) {
+                System.out.println(list);
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        Elements tagA = document.getElementsByTag("h2");
-
-        for (Element el: tagA) {
-            Element aElement = el.child(0);
-            String url = aElement.attr("href");
-            String title = aElement.text();
-
-            articleList.add(new Article(url,title));
-        }
-        for (Article list : articleList) {
-            System.out.println(list);
         }
     }
 }
