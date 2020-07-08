@@ -7,9 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestParser {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         List<Article> articleList = new ArrayList<Article>();
-        Document document = Jsoup.connect("https://hi-news.ru/").get();
+        Document document = null;
+        try {
+            document = Jsoup.connect("https://hi-news.ru/").get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Elements tagA = document.getElementsByTag("h2");
 
         for (Element el: tagA) {
