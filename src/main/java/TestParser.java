@@ -12,9 +12,9 @@ public class TestParser {
         Document document;
         try {
             document = Jsoup.connect("https://hi-news.ru/").get();
-            Elements tagA = document.getElementsByTag("h2");
+            Elements tag = document.getElementsByTag("h2");
 
-            for (Element el: tagA) {
+            for (Element el: tag) {
                 Element aElement = el.child(0);
                 String url = aElement.attr("href");
                 String title = aElement.text();
