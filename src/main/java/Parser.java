@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestParser {
+public class Parser {
     public static void main(String[] args) {
         List<Article> articleList = new ArrayList<Article>();
         Document document;
