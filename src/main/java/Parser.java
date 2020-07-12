@@ -3,62 +3,35 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Parser {
-    public static void main(String[] args) {
-        List<Article> articleList = new ArrayList<Article>();
-        Document document;
+    private Document document;
+    public Parser(){
+        connect();
+    }
+    private void connect(){
         try {
             document = Jsoup.connect("https://hi-news.ru/").get();
-            Elements tag = document.getElementsByTag("h2");
-
-            for (Element el: tag) {
-                Element aElement = el.child(0);
-                String url = aElement.attr("href");
-                String title = aElement.text();
-
-                articleList.add(new Article(url,title));
-            }
-            for (Article list : articleList) {
-                System.out.println(list);
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-}
-class Article {
-    private String url;
-    private String name;
-
-    public Article(String url, String name) {
-        this.url = url;
-        this.name = name;
+    public String getArticle() {
+        Elements tag = document.getElementsByTag("h2");
+        String title = null;
+        for (Element el: tag) {
+            Element aElement = el.child(0);
+            title = aElement.text();
+        }
+        return title;
     }
-
     public String getUrl() {
+        Elements tag = document.getElementsByTag("h2");
+        String url = null;
+        for (Element el: tag) {
+            Element aElement = el.child(0);
+            url = aElement.attr("href");
+        }
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-                "url='" + url + '\'' +
-                ", name='" + name + '\'' +
-                '}';
     }
 }
