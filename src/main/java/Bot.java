@@ -34,7 +34,7 @@ public class Bot extends TelegramLongPollingBot {
         if (msg.contains("Hi") || msg.contains("hi") || msg.contains("Hello")
                 || msg.contains("hello") || msg.contains("Привет")
                 || msg.contains("привет")) {
-            return "Привет Роман!";
+            return "Привет Юзер!";
         }
         if (msg.contains("Article")){
             return getInfoArticle();
