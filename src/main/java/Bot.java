@@ -24,20 +24,18 @@ public class Bot extends TelegramLongPollingBot {
     public String getBotToken() {
         return PropertiesData.prop.getProperty("token");
     }
-    public String getInfoArticle(){
-        String art = new Parser().getArticle();
-        String url = new Parser().getUrl();
-        return art + "\n" + url;
-    }
 
     public String input(String msg){
-        if (msg.contains("Hi") || msg.contains("hi") || msg.contains("Hello")
-                || msg.contains("hello") || msg.contains("Привет")
-                || msg.contains("привет")) {
+        if (msg.equalsIgnoreCase("hi")
+                || msg.equalsIgnoreCase("hello")
+                || msg.equalsIgnoreCase("привет")) {
             return "Привет Юзер!";
         }
-        if (msg.contains("Article")){
-            return getInfoArticle();
+        if (msg.equalsIgnoreCase("bye") || msg.equalsIgnoreCase("пока")){
+            return "До встречи!";
+        }
+        if (msg.equalsIgnoreCase("article")){
+            return Parser.getUrl();
         }
         return "нет такой команды";
     }

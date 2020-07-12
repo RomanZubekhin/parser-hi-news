@@ -5,7 +5,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 public class Parser {
-    private Document document;
+    private static Document document;
     public Parser(){
         connect();
     }
@@ -16,21 +16,14 @@ public class Parser {
             e.printStackTrace();
         }
     }
-    public String getArticle() {
-        Elements tag = document.getElementsByTag("h2");
-        String title = null;
-        for (Element el: tag) {
-            Element aElement = el.child(0);
-            title = aElement.text();
-        }
-        return title;
-    }
-    public String getUrl() {
+    public static String getUrl() {
         Elements tag = document.getElementsByTag("h2");
         String url = null;
-        for (Element el: tag) {
-            Element aElement = el.child(0);
-            url = aElement.attr("href");
+        for (Element el : tag) {
+            for (int i = 0; i < 4; i++) {
+                Element aElement = el.child(i);
+                url = aElement.attr("href");
+            }
         }
         return url;
     }
