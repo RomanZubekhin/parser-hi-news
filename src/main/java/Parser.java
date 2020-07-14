@@ -20,8 +20,8 @@ public class Parser {
         Elements tag = document.getElementsByTag("h2");
         String url = null;
         for (Element el : tag) {
-                Element aElement = el.child(0);
-                url = aElement.attr("href");
+            Element aElement = el.child(0);
+            url = aElement.attr("href");
         }
         return url;
     }
