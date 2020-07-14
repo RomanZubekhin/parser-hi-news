@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* Main
+web: java -jar target/parser-hi-news-1.0-SNAPSHOT.jar
