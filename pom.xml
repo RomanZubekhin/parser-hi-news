@@ -26,21 +26,17 @@
     <build>
     <plugins>
         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <version>3.1.2</version>
-            <executions>
-                <execution>
-                    <id>copy-dependencies</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>copy-dependencies</goal>
-                    </goals>
-                    <configuration>
-                        <!-- configure the plugin here -->
-                    </configuration>
-                </execution>
-            </executions>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>appassembler-maven-plugin</artifactId>
+            <version>1.10</version>
+            <configuration>
+                <programs>
+                    <program>
+                        <mainClass>Main</mainClass>
+                        <id>app</id>
+                    </program>
+                </programs>
+            </configuration>
         </plugin>
     </plugins>
 </build>
