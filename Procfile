@@ -1,1 +1,1 @@
-worker: java -jar target/target/parser-hi-news-1.0-SNAPSHOT-jar-with-dependencies.jar
+web: java $JAVA_OPTS -cp target/classes;target/dependency/* Main
