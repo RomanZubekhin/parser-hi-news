@@ -1,1 +1,1 @@
-web: java -jar target/parser-hi-news-1.0-SNAPSHOT.jar
+worker: sh target/bin/main
