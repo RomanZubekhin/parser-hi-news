@@ -6,22 +6,22 @@ import java.io.IOException;
 
 public class Parser {
     private static Document document;
-    public Parser(){
+    public Parser() {
         connect();
     }
-    private void connect(){
+
+    private void connect() {
         try {
             document = Jsoup.connect("https://hi-news.ru/").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static String getUrl() {
-        Elements tag = document.getElementsByTag("h2");
+    public String getUrl() {
+        Elements tag = document.getElementsByClass("roll main-roll");
         String url = null;
         for (Element el : tag) {
-            Element aElement = el.child(0);
-            url = aElement.attr("href");
+            url = el.select("a").attr("href");
         }
         return url;
     }

@@ -35,7 +35,7 @@ public class Bot extends TelegramLongPollingBot {
             return "До встречи!";
         }
         if (msg.equalsIgnoreCase("article")){
-            return Parser.getUrl();
+            return new Parser().getUrl();
         }
         return "нет такой команды";
     }
