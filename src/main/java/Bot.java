@@ -47,7 +47,6 @@ public class Bot extends TelegramLongPollingBot {
                 || msg.equalsIgnoreCase("hello")
                 || msg.equalsIgnoreCase("привет")
                 || msg.equalsIgnoreCase("/start")) {
-            keyboardRowsList.clear();
             row1.add("Habr");
             row1.add("Новости hi-news");
             keyboardRowsList.add(row1);
@@ -58,13 +57,13 @@ public class Bot extends TelegramLongPollingBot {
             lastMessage = msg;
             keyboardRowsList.clear();
             row1.add("Последние 10 статей");
+            row1.add("Меню");
             keyboardRowsList.add(row1);
             keyboardMarkup.setKeyboard(keyboardRowsList);
             return "Выберите пункт меню";
         }
         if(lastMessage.equals("Новости hi-news")){
             if(msg.equals("Последние 10 статей")){
-                keyboardRowsList.clear();
                 try {
                     return getArticleHi(new ArticleTop().getArticleHi(msg));
                 } catch (IOException e) {
@@ -77,6 +76,7 @@ public class Bot extends TelegramLongPollingBot {
             keyboardRowsList.clear();
             row1.add("Лучшие за сутки");
             row1.add("Лучшие за неделю");
+            row1.add("Меню");
             keyboardRowsList.add(row1);
             keyboardMarkup.setKeyboard(keyboardRowsList);
             return "Выберите пункт меню";
@@ -90,6 +90,14 @@ public class Bot extends TelegramLongPollingBot {
                     e.printStackTrace();
                 }
             }
+        }
+        if (msg.equalsIgnoreCase("меню")) {
+            keyboardRowsList.clear();
+            row1.add("Habr");
+            row1.add("Новости hi-news");
+            keyboardRowsList.add(row1);
+            keyboardMarkup.setKeyboard(keyboardRowsList);
+            return "Выбери что тебя интересует.";
         }
         return "нет такой команды";
     }
@@ -108,7 +116,7 @@ public class Bot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
         }
-        return "Что-то отвечаем Hi:)";
+        return "Что-то пошло не так!";
     }
 
     private String getArticleHabr(String[] articleHabr) {
@@ -125,6 +133,6 @@ public class Bot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
         }
-        return "Что-то отвечаем Habr:)";
+        return "Что-то пошло не так!";
     }
 }
