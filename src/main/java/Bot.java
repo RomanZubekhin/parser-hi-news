@@ -15,6 +15,7 @@ public class Bot extends TelegramLongPollingBot {
     ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
 
     public void onUpdateReceived(Update update) {
+        update.getUpdateId();
         SendMessage sendMessage = new SendMessage().setChatId(update.getMessage().getChatId());
         chat_id = update.getMessage().getChatId();
 
@@ -63,6 +64,7 @@ public class Bot extends TelegramLongPollingBot {
         }
         if(lastMessage.equals("Новости hi-news")){
             if(msg.equals("Последние 10 статей")){
+                keyboardRowsList.clear();
                 try {
                     return getArticleHi(new ArticleTop().getArticleHi(msg));
                 } catch (IOException e) {
@@ -81,6 +83,7 @@ public class Bot extends TelegramLongPollingBot {
         }
         if(lastMessage.equals("Habr")){
             if(msg.equals("Лучшие за сутки") || msg.equals("Лучшие за неделю")){
+                keyboardRowsList.clear();
                 try {
                     return getArticleHabr(new ArticleTop().getArticleHabr(msg));
                 } catch (IOException e) {

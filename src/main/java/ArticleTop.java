@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ArticleTop {
-    Document document = null;
+    private Document document = null;
 
     public String[] getArticleHabr(String period) throws IOException {
         if (period.equals("Лучшие за сутки")) {
@@ -16,12 +16,12 @@ public class ArticleTop {
             document = Jsoup.connect("https://habr.com/ru/top/weekly/").get();
         }
 
-        Elements name = document.getElementsByClass("posts_list");
+        Elements name = document.getElementsByClass("post__title");
 
         ArrayList<String> article = new ArrayList<String>();
         for (int i = 0; i < name.size(); i++) {
             if (i < 10) {
-                article.add(name.get(i).attr("href"));
+                article.add(name.get(i).select("a").attr("href"));
             }
         }
 
@@ -36,12 +36,12 @@ public class ArticleTop {
         if (period.equals("Последние 10 статей")) {
             document = Jsoup.connect("https://hi-news.ru/").get();
         }
-        Elements name = document.getElementsByClass("roll main-roll");
+        Elements name = document.getElementsByClass("more-link");
 
         ArrayList<String> article = new ArrayList<String>();
         for (int i = 0; i < name.size(); i++) {
             if (i < 10) {
-                article.add(name.get(i).attr("href"));
+                article.add(name.get(i).select("a").attr("href"));
             }
         }
 
