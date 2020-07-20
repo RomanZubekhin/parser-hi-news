@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Bot extends TelegramLongPollingBot {
@@ -14,7 +15,6 @@ public class Bot extends TelegramLongPollingBot {
     ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
 
     public void onUpdateReceived(Update update) {
-        update.getUpdateId();
         SendMessage sendMessage = new SendMessage().setChatId(update.getMessage().getChatId());
         chat_id = update.getMessage().getChatId();
 
@@ -39,6 +39,7 @@ public class Bot extends TelegramLongPollingBot {
         ArrayList<KeyboardRow> keyboardRowsList = new ArrayList<KeyboardRow>();
         KeyboardRow row1 = new KeyboardRow();
         keyboardMarkup.setSelective(true);
+        keyboardMarkup.setResizeKeyboard(true);
         keyboardMarkup.setOneTimeKeyboard(false);
 
         if (msg.equalsIgnoreCase("hi")
@@ -46,20 +47,81 @@ public class Bot extends TelegramLongPollingBot {
                 || msg.equalsIgnoreCase("привет")
                 || msg.equalsIgnoreCase("/start")) {
             keyboardRowsList.clear();
-            row1.add("Популярное");
+            row1.add("Habr");
             row1.add("Новости hi-news");
             keyboardRowsList.add(row1);
             keyboardMarkup.setKeyboard(keyboardRowsList);
-            return "Привет Юзер!" + "\n" + "Выбери что тебя интересует.";
+            return "Привет!" + "\n" + "Выбери что тебя интересует.";
         }
         if (msg.equals("Новости hi-news")){
+            lastMessage = msg;
             keyboardRowsList.clear();
-            row1.add("Статьи за сегодня");
-            row1.add("Статьи за неделю");
+            row1.add("Последние 10 статей");
             keyboardRowsList.add(row1);
             keyboardMarkup.setKeyboard(keyboardRowsList);
             return "Выберите пункт меню";
         }
+        if(lastMessage.equals("Новости hi-news")){
+            if(msg.equals("Последние 10 статей")){
+                try {
+                    return getArticleHi(new ArticleTop().getArticleHi(msg));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (msg.equals("Habr")){
+            lastMessage = msg;
+            keyboardRowsList.clear();
+            row1.add("Лучшие за сутки");
+            row1.add("Лучшие за неделю");
+            keyboardRowsList.add(row1);
+            keyboardMarkup.setKeyboard(keyboardRowsList);
+            return "Выберите пункт меню";
+        }
+        if(lastMessage.equals("Habr")){
+            if(msg.equals("Лучшие за сутки") || msg.equals("Лучшие за неделю")){
+                try {
+                    return getArticleHabr(new ArticleTop().getArticleHabr(msg));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return "нет такой команды";
+    }
+
+    private String getArticleHi(String[] articleHi) {
+        SendMessage sendMessage = new SendMessage().setChatId(chat_id);
+        for(int i = 0; i < articleHi.length; i++){
+            try {
+                if((i + 1) == articleHi.length){
+                    return articleHi[i];
+                }
+                sendMessage.setText(articleHi[i]);
+                execute(sendMessage);
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return "Что-то отвечаем Hi:)";
+    }
+
+    private String getArticleHabr(String[] articleHabr) {
+        SendMessage sendMessage = new SendMessage().setChatId(chat_id);
+        for(int i = 0; i < articleHabr.length; i++){
+            try {
+                if((i + 1) == articleHabr.length){
+                    return articleHabr[i];
+                }
+                sendMessage.setText(articleHabr[i]);
+                execute(sendMessage);
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return "Что-то отвечаем Habr:)";
     }
 }
