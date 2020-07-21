@@ -30,10 +30,10 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
     public String getBotUsername() {
-        return PropertiesData.prop.getProperty("username");
+        return System.getenv("username");
     }
     public String getBotToken() {
-        return PropertiesData.prop.getProperty("token");
+        return System.getenv("token");
     }
 
     public String getMessage(String msg){
